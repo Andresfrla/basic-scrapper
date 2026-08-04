@@ -38,7 +38,7 @@ export function NotificationContactList({ contacts, onUpdate, onDelete }: Notifi
                 </p>
                 <p className="text-sm text-muted-foreground">
                   {contact.statusChangeEnabled
-                    ? `Cambios de status: ${contact.statusChangeMorningTime} y ${contact.statusChangeNightTime}`
+                    ? "Cambios de status: inmediato"
                     : "Cambios de status: desactivado"}
                   {" · "}
                   {contact.generalDigestEnabled

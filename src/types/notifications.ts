@@ -4,10 +4,9 @@ export interface NotificationContact {
   id: string;
   name: string;
   email: string;
+  // Aviso inmediato: se dispara al detectar un cambio de status durante el
+  // scraping automático. No tiene horario.
   statusChangeEnabled: boolean;
-  statusChangeMorningTime: string;
-  statusChangeNightTime: string;
-  lastStatusChangeSentAt: string | null;
   generalDigestEnabled: boolean;
   generalDigestFrequency: GeneralDigestFrequency;
   generalDigestMorningTime: string;
@@ -18,5 +17,5 @@ export interface NotificationContact {
 
 export type NotificationContactInput = Omit<
   NotificationContact,
-  "id" | "lastStatusChangeSentAt" | "lastGeneralDigestSentAt"
+  "id" | "lastGeneralDigestSentAt"
 >;

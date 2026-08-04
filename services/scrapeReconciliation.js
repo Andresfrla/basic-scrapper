@@ -68,6 +68,7 @@ export async function runScrapeAll({ onlyStaleOrOpen = false } = {}) {
   const errors = [];
   const updatedRows = [];
   const createdRows = [];
+  const statusChanges = [];
 
   let isFirstGroup = true;
   for (const groupRows of groups.values()) {
@@ -119,11 +120,13 @@ export async function runScrapeAll({ onlyStaleOrOpen = false } = {}) {
           continue;
         }
         const [match] = remaining.splice(matchIndex, 1);
+        const change = statusChangeFor(row, match.estado);
         const updated = await updateRow(row.id, {
           ...toScrapePatch(match),
           scrapeError: null,
-        }, { statusChange: statusChangeFor(row, match.estado) });
+        }, { statusChange: change });
         updatedRows.push(updated);
+        if (change) statusChanges.push({ ...change, row: updated });
         scraped += 1;
       }
 
@@ -137,12 +140,14 @@ export async function runScrapeAll({ onlyStaleOrOpen = false } = {}) {
           continue;
         }
         const patch = toScrapePatch(match);
+        const change = statusChangeFor(row, match.estado);
         const updated = await updateRow(row.id, {
           ...patch,
           values: { ...patch.values, secuencia: match.secuencia },
           scrapeError: null,
-        }, { statusChange: statusChangeFor(row, match.estado) });
+        }, { statusChange: change });
         updatedRows.push(updated);
+        if (change) statusChanges.push({ ...change, row: updated });
         scraped += 1;
       }
 
@@ -172,5 +177,5 @@ export async function runScrapeAll({ onlyStaleOrOpen = false } = {}) {
     }
   }
 
-  return { processed, scraped, skipped, errors, updatedRows, createdRows };
+  return { processed, scraped, skipped, errors, updatedRows, createdRows, statusChanges };
 }

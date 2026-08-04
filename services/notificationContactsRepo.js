@@ -7,9 +7,6 @@ const DEFAULT_CONTACT = {
   name: "",
   email: "",
   statusChangeEnabled: false,
-  statusChangeMorningTime: "08:00",
-  statusChangeNightTime: "20:00",
-  lastStatusChangeSentAt: null,
   generalDigestEnabled: false,
   generalDigestFrequency: "daily",
   generalDigestMorningTime: "08:00",
@@ -19,7 +16,7 @@ const DEFAULT_CONTACT = {
 };
 
 const EDITABLE_FIELDS = new Set([
-  "name", "email", "statusChangeEnabled", "statusChangeMorningTime", "statusChangeNightTime",
+  "name", "email", "statusChangeEnabled",
   "generalDigestEnabled", "generalDigestFrequency", "generalDigestMorningTime",
   "generalDigestNightTime", "generalDigestWeekday",
 ]);
@@ -97,7 +94,7 @@ export async function updateContact(id, patch) {
 }
 
 export async function updateContactDeliveryState(id, patch) {
-  const allowed = new Set(["lastStatusChangeSentAt", "lastGeneralDigestSentAt"]);
+  const allowed = new Set(["lastGeneralDigestSentAt"]);
   if (Object.keys(patch).some((key) => !allowed.has(key))) throw new Error("Cursor de entrega inválido");
   await getDb().collection(COLLECTION).doc(id).update(patch);
 }

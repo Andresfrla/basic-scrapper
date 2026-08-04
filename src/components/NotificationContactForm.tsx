@@ -18,8 +18,6 @@ const DEFAULT_INPUT: NotificationContactInput = {
   name: "",
   email: "",
   statusChangeEnabled: false,
-  statusChangeMorningTime: "08:00",
-  statusChangeNightTime: "20:00",
   generalDigestEnabled: false,
   generalDigestFrequency: "daily",
   generalDigestMorningTime: "08:00",
@@ -32,8 +30,6 @@ function editableFields(value: NotificationContactInput): NotificationContactInp
     name: value.name,
     email: value.email,
     statusChangeEnabled: value.statusChangeEnabled,
-    statusChangeMorningTime: value.statusChangeMorningTime,
-    statusChangeNightTime: value.statusChangeNightTime,
     generalDigestEnabled: value.generalDigestEnabled,
     generalDigestFrequency: value.generalDigestFrequency,
     generalDigestMorningTime: value.generalDigestMorningTime,
@@ -107,26 +103,9 @@ export function NotificationContactForm({
           Avisar cuando cambie el status de un registro
         </label>
         {value.statusChangeEnabled && (
-          <div className="grid grid-cols-2 gap-3 pl-6">
-            <div>
-              <Label htmlFor="status-morning">Resumen de la mañana</Label>
-              <Input
-                id="status-morning"
-                type="time"
-                value={value.statusChangeMorningTime}
-                onChange={(e) => update("statusChangeMorningTime", e.target.value)}
-              />
-            </div>
-            <div>
-              <Label htmlFor="status-night">Resumen de la noche</Label>
-              <Input
-                id="status-night"
-                type="time"
-                value={value.statusChangeNightTime}
-                onChange={(e) => update("statusChangeNightTime", e.target.value)}
-              />
-            </div>
-          </div>
+          <p className="text-sm text-muted-foreground pl-6">
+            Se envía automáticamente al detectar el cambio durante el scraping. No tiene horario.
+          </p>
         )}
       </div>
 
