@@ -26,15 +26,17 @@ function debugLog(message, meta) {
 }
 
 /**
- * El portal del SAT negocia TLS de forma "legacy" (renegociación insegura y
- * cifrados con nivel de seguridad bajo). Node moderno rechaza esa conexión por
- * defecto, por lo que habilitamos un agente HTTPS permisivo igual que lo hace
- * el scraper de border-flow. Se puede forzar con SAT_TLS_LEGACY=1/0.
+ * El portal del SAT negocia TLS de forma "legacy" (renegociación insegura,
+ * cifrados con nivel de seguridad bajo y una llave Diffie-Hellman por debajo de
+ * 2048 bits). Node moderno rechaza esa conexión por defecto —en producción
+ * fallaba con `EPROTO ... dh key too small`—, por lo que habilitamos SIEMPRE un
+ * agente HTTPS permisivo igual que lo hace el scraper de border-flow. El portal
+ * lo requiere en todos los entornos, incluido Vercel (NODE_ENV=production). Se
+ * puede desactivar explícitamente con SAT_TLS_LEGACY=0.
  */
 function shouldUseLegacySatTls() {
-  if (process.env.SAT_TLS_LEGACY === "1") return true;
   if (process.env.SAT_TLS_LEGACY === "0") return false;
-  return process.env.NODE_ENV !== "production";
+  return true;
 }
 
 function buildSatHttpsAgent() {
