@@ -3,16 +3,23 @@ import { ArrowLeft, AlertTriangle } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { DetallePedimento } from "../components/DetallePedimento";
 import { DetalleEstadoPago } from "../components/DetalleEstadoPago";
-import { useResultsStore } from "../store/useResultsStore";
+import { useSheetStore } from "../store/useSheetStore";
 
 export function DetallePage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { resultados } = useResultsStore();
+  const row = useSheetStore((state) => (id ? state.getRowById(id) : undefined));
+  const isLoading = useSheetStore((state) => state.isLoading);
 
-  const resultado = resultados.find((r) => r.id === id);
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-8 px-4">
+        <p className="text-sm text-muted-foreground">Cargando…</p>
+      </div>
+    );
+  }
 
-  if (!resultado) {
+  if (!row || !row.detalle) {
     return (
       <div className="container mx-auto py-8 px-4">
         <Button variant="ghost" onClick={() => navigate("/")} className="mb-4">
@@ -23,14 +30,14 @@ export function DetallePage() {
           <AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" />
           <h3 className="text-lg font-medium text-muted-foreground">Registro no encontrado</h3>
           <p className="text-sm text-muted-foreground mt-1">
-            El registro solicitado no existe o fue eliminado de la tabla de resultados.
+            La fila no existe o todavía no se ha actualizado con el scraper.
           </p>
         </div>
       </div>
     );
   }
 
-  const { detalle } = resultado;
+  const { detalle } = row;
 
   return (
     <div className="container mx-auto py-8 px-4">

@@ -4,8 +4,7 @@ const COOKIE_NAME = "sat_admin_session";
 const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 
 function password() {
-  const value = process.env.ADMIN_PASSWORD || "";
-  return value.length >= 16 ? value : "";
+  return process.env.ADMIN_PASSWORD || "";
 }
 
 function equal(left, right) {

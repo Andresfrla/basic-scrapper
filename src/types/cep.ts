@@ -13,6 +13,9 @@ export interface CepResultadoResumen {
   documento: string;
   estado: string;
   fecha: string;
+  secuencia: string;
+  numeroOperacion: string;
+  factura: string;
   metodoConsulta: MetodoConsulta;
   detalle: CepDetalle;
 }

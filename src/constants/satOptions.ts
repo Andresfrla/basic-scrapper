@@ -69,7 +69,7 @@ export const SAT_OPTIONS = {
 } as const;
 
 export const SAT_DEFAULTS = {
-  aduana: "510",
+  aduana: "240", // NUEVO LAREDO, TAMPS.
   anio: "2026",
 } as const;
 
