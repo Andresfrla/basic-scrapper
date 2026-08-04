@@ -1,0 +1,10 @@
+{
+  "crons": [
+    { "path": "/api/sat/auto-scrape", "schedule": "0 */2 * * *" },
+    { "path": "/api/notifications/dispatch", "schedule": "*/15 * * * *" }
+  ],
+  "functions": {
+    "api/sat/auto-scrape.js": { "maxDuration": 300 },
+    "api/notifications/dispatch.js": { "maxDuration": 300 }
+  }
+}
