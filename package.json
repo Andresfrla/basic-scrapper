@@ -7,7 +7,8 @@
     "dev": "concurrently \"vite\" \"node proxy-server/index.js\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test \"services/**/*.test.js\""
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -21,7 +22,10 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "firebase": "^12.17.0",
+    "firebase-admin": "^14.2.0",
     "lucide-react": "^1.7.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
